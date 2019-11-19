@@ -49,3 +49,8 @@ class UsernameCountView(View):
     def get(self, request, username):
         count = User.objects.filter(username=username).count()
         return http.JsonResponse({'count': count})
+
+class MobileCountView(View):
+    def get(self, request, mobile):
+        count = User.objects.filter(username=mobile).count()
+        return http.JsonResponse({'count': count})

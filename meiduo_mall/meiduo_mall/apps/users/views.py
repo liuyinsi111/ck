@@ -43,7 +43,7 @@ class RegisterView(View):
         login(request, user)
         return http.HttpResponse('注册成功即代表登陆成功')
 
-        pass
+
 
 class UsernameCountView(View):
     def get(self, request, username):

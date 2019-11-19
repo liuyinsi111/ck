@@ -4,8 +4,8 @@ from django_redis import get_redis_connection
 from django.views import View
 from django import http
 from meiduo_mall.libs.captcha.captcha import captcha
-from meiduo_mall.utils.register import errmsg
-#TODO 没有导captcha
+from meiduo_mall.libs.response_code import RETCODE
+
 
 class ImageCodeView(View):
     def get(self, request, uuid):
@@ -17,6 +17,7 @@ class ImageCodeView(View):
 class SMSCodeView(View):
     def get(self, request, mobile):
         query_dict = request.GET
+
         image_code_client = query_dict.get('image_code')
         uuid = query_dict.get('uuid')
         if all([image_code_client, uuid]) is False:

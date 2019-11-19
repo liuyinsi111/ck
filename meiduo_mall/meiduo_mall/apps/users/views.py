@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic import View
 from django import http
 import re
-
+from .models import User
 class RegisterView(View):
     def get(self, request):
         return render(request, 'register.html')
@@ -29,9 +29,17 @@ class RegisterView(View):
         # 判断手机号是否合法
         if not re.match(r'^1[3-9]\d{9}$', mobile):
             return http.HttpResponseForbidden('请输入正确的手机号码')
-        # 判断是否勾选用户协议
+        #TODO：短信验证码的验证代码后期补充
+        user = User.objects.create(
+            username=username,
+            password=password,
+            mobile=mobile
+        )
+        # user.set_password(password)
+        # user.save()
+        # user.check_password()
+        user = User.objects.create_user(username=username, password=password, mobile=mobile)
 
+        return http.HttpResponse('注册成功即代表登陆成功')
 
-
-
-
+        pass

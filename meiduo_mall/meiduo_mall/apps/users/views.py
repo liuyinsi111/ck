@@ -1,9 +1,10 @@
 from django.shortcuts import render
-
 from django.views.generic import View
 from django import http
 import re
 from .models import User
+from django.contrib.auth import login
+
 class RegisterView(View):
     def get(self, request):
         return render(request, 'register.html')
@@ -39,7 +40,7 @@ class RegisterView(View):
         # user.save()
         # user.check_password()
         user = User.objects.create_user(username=username, password=password, mobile=mobile)
-
+        login(request, user)
         return http.HttpResponse('注册成功即代表登陆成功')
 
         pass

@@ -185,6 +185,7 @@ var vm = new Vue({
 
             // 向后端接口发送请求，让后端发送短信验证码
             var url = this.host + '/sms_codes/' + this.mobile + '/?image_code=' + this.image_code + '&uuid=' + this.uuid;
+            //把手机号放在路径上路由就不用写正则了，路由只匹配问号前面和后面
             axios.get(url, {
                 responseType: 'json'
             })
@@ -210,6 +211,7 @@ var vm = new Vue({
                         }, 1000, 60)
                     } else {
                         if (response.data.code == '4001') {
+                            //4001自定义状态码，跟200，301是两回事，随机编的数字方便前后端沟通
                             this.error_image_code_message = response.data.errmsg;
                             this.error_image_code = true;
                         } else { // 4002

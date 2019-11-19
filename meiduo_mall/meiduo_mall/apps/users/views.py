@@ -44,3 +44,8 @@ class RegisterView(View):
         return http.HttpResponse('注册成功即代表登陆成功')
 
         pass
+
+class UsernameCountView(View):
+    def get(self, request, username):
+        count = User.objects.filter(username=username).count()
+        return http.JsonResponse({'count': count})

@@ -68,6 +68,8 @@ var vm = new Vue({
             if (this.error_name == false) {
                 var url = this.host + '/usernames/' + this.username + '/count/';
                 axios.get(url, {
+                //axios,专门发请求的
+
                     responseType: 'json'
                 })
                     .then(response => {

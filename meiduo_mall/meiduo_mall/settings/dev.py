@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'users', # 用户模块应用
+    'users.apps.UsersConfig', # 用户模块应用
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

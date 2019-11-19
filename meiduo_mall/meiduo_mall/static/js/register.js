@@ -31,6 +31,7 @@ var vm = new Vue({
         allow: true
     },
     mounted: function () {
+        //生命周期方法
         // 向服务器获取图片验证码
         this.generate_image_code();
     },
@@ -41,6 +42,8 @@ var vm = new Vue({
                 d += performance.now(); //use high-precision timer if available
             }
             var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                //xxxxxxxxxxxx唯一标识，用来区分图形验证码是谁的，把uuid作为key，唯一标识，用户发短信时也会把uuid传到后端，
+                //用uuid去redis数据库里取值，用前端js存着
                 var r = (d + Math.random() * 16) % 16 | 0;
                 d = Math.floor(d / 16);
                 return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
@@ -53,6 +56,8 @@ var vm = new Vue({
             this.uuid = this.generateUUID();
             // 设置页面中图片验证码img标签的src属性
             this.image_code_url = this.host + "/image_codes/" + this.uuid + "/";
+            //host-127.0.0.1，发起get请求，类视图写一个get请求，将图形验证码存其来以便后期验证
+            //存在redis里面，以key：value的形式，uuid就是key，定义一个视图
             console.log(this.image_code_url);
         },
         // 检查用户名

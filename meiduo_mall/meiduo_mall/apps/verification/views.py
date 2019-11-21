@@ -8,6 +8,8 @@ from meiduo_mall.libs.response_code import RETCODE
 from meiduo_mall.libs.yuntongxun.sms import CCP
 from random import randint
 import logging
+from . import constants
+
 logger = logging.getLogger('django')
 
 
@@ -17,6 +19,7 @@ class ImageCodeView(View):
         name, text, image = captcha.generate_captcha()
         redis_conn = get_redis_connection('verify_codes')
         redis_conn.setex(uuid, 300, text)
+        redis_conn.delete(uuid)
         return http.HttpResponse(image, content_type='image/png')
 
 class SMSCodeView(View):
@@ -42,7 +45,7 @@ class SMSCodeView(View):
         #except里面用error（）
         #随机生成6位数字，为了方便测试将验证码发到控制台
         CCP().send_template_sms('接收短信的手机号', ['验证码', '提示用户的过期时间：单秒分钟'], 1)
-        redis_conn.setex('sms_%s' % mobile, 300, sms_code)
+        redis_conn.setex('sms_%s' % mobile, constants.SMS_CODE_EXPIRE, sms_code)
         #保存验证码到redis，方便以后验证
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK'})
     #ok代表字符串0，

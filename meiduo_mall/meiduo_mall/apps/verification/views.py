@@ -22,19 +22,37 @@ class ImageCodeView(View):
         redis_conn.delete(uuid)
         return http.HttpResponse(image, content_type='image/png')
 
+
+
+
 class SMSCodeView(View):
+
+
     def get(self, request, mobile):
+
+        redis_conn = get_redis_connection('verify_codes')
+        send_flag = redis_conn.get('send_flag_%s' % mobile)
+        if send_flag:
+            return http.JsonResponse({'code': RETCODE.THROTTLINGERR, 'errmsg':'频繁发送短信'})
+
+
+
         query_dict = request.GET
 
         image_code_client = query_dict.get('image_code')
         uuid = query_dict.get('uuid')
+
         if all([image_code_client, uuid]) is False:
             return http.HttpResponse('缺少必传参数')
+
+
         redis_conn = get_redis_connection('verify_codes')
         image_code_server_bytes = redis_conn.get(uuid)
+
         if image_code_server_bytes is None:
             return http.JsonResponse({'code': RETCODE.IMAGECODEERR, 'errmsg':'图形验证码已过期'})
         image_code_server = image_code_server_bytes.decode()
+
         if image_code_client.lower() != image_code_server.lower():
             return http.JsonResponse({'code': RETCODE.IMAGECODEERR, 'errmsg': '图形验证码填写错误'})
 
@@ -42,10 +60,12 @@ class SMSCodeView(View):
 
         sms_code = '%06d'% randint(0,999999)
         logger.info(sms_code)
-        #except里面用error（）
-        #随机生成6位数字，为了方便测试将验证码发到控制台
-        CCP().send_template_sms('接收短信的手机号', ['验证码', '提示用户的过期时间：单秒分钟'], 1)
-        redis_conn.setex('sms_%s' % mobile, constants.SMS_CODE_EXPIRE, sms_code)
+        redis_conn.setex('send_flag_%s' % mobile, 60, 1)
+
+        #CCP().send_template_sms('15927339863', ['验证码', '提示用户的过期时间：单秒分钟'], 1)
+        CCP().send_template_sms(15927339863, [sms_code, constants.SMS_CODE_REDIS_EXPIRES],1)
+      #conn.setex('sms_%s' % mobile, constants.SMS_CODE_EXPIRE, sms_code)
+
         #保存验证码到redis，方便以后验证
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK'})
     #ok代表字符串0，

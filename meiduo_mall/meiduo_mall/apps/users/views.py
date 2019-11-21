@@ -4,8 +4,7 @@ from django import http
 import re
 from .models import User
 from django.contrib.auth import login
-from  import get_redis
-
+from django_redis import get_redis_connection
 
 class RegisterView(View):
     def get(self, request):
@@ -20,16 +19,16 @@ class RegisterView(View):
         allow = query_dict.get('allow')
         if not all([username, password, password2, mobile, allow]):
             return http.HttpResponseForbidden('缺少必传参数')
-        # 判断用户名是否是5-20个字符
+        # # 判断用户名是否是5-20个字符
         if not re.match(r'^[a-zA-Z0-9_-]{5,20}$', username):
             return http.HttpResponseForbidden('请输入5-20个字符的用户名')
-        # 判断密码是否是8-20个数字
+        # # 判断密码是否是8-20个数字
         if not re.match(r'^[0-9A-Za-z]{8,20}$', password):
             return http.HttpResponseForbidden('请输入8-20位的密码')
-        # 判断两次密码是否一致
+        # # 判断两次密码是否一致
         if password != password2:
             return http.HttpResponseForbidden('两次输入的密码不一致')
-        # 判断手机号是否合法
+        # # 判断手机号是否合法
         if not re.match(r'^1[3-9]\d{9}$', mobile):
             return http.HttpResponseForbidden('请输入正确的手机号码')
 
@@ -37,7 +36,7 @@ class RegisterView(View):
         #获取当前手机号验证码
         #判断是否国旗
         #判断填写验证码是否符合
-        redis_conn = get_redis_connection('verity_codes')
+        redis_conn = get_redis_connection('verify_codes')
         sms_code_server = redis_conn.get('sms_%s' % mobile)
 
         redis_conn.delete('sms_%s'% mobile)
@@ -63,3 +62,11 @@ class MobileCountView(View):
     def get(self, request, mobile):
         count = User.objects.filter(username=mobile).count()
         return http.JsonResponse({'count': count})
+
+
+class LoginView(View):
+    def get(self, request):
+        return render(request, 'login.html')
+
+    def post(self, request):
+        #1.接收2.校验3.判断用户名和密码是否正确4.状态保持5.重定向

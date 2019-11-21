@@ -9,7 +9,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 _accountSid = '8aaf07086e0115bb016e8c93e8015217'
 
 # 说明：主账号Token，登陆云通讯网站后，可在控制台-应用中看到开发者主账号AUTH TOKEN
-_accountToken = '1eb7343c59284d428411203da32d358c'
+_accountToken = '478635ac5e2e4872a1893360fa25b941'
 
 # 请使用管理控制台首页的APPID或自己创建应用的APPID
 _appId = '8aaf07086e0115bb016e8c93e856521d'

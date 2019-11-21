@@ -5,6 +5,8 @@ import re
 from .models import User
 from django.contrib.auth import login
 from django_redis import get_redis_connection
+from django.contrib.auth import authenticate
+
 
 class RegisterView(View):
     def get(self, request):
@@ -46,10 +48,10 @@ class RegisterView(View):
 
         if sms_code != sms_code_server.decode():
             return render(request, 'register.html', {'register_errmsg':'短信验证码填写错误'})
-
+        #
         user = User.objects.create_user(username=username, password=password, mobile=mobile)
         login(request, user)
-        return http.HttpResponse('注册成功即代表登陆成功')
+        return http.HttpResponse('注册成功即代表登陆成功,重定向到首页')
 
 
 
@@ -68,5 +70,23 @@ class LoginView(View):
     def get(self, request):
         return render(request, 'login.html')
 
-    def post(self, request):
-        #1.接收2.校验3.判断用户名和密码是否正确4.状态保持5.重定向
+    def post(self, request):#1.接收2.校验3.判断用户名和密码是否正确4.状态保持5.重定向
+        query_dict = request.POST
+        username = query_dict.get('username')
+        password = query_dict.get('password')
+        remembored = query_dict.get('remembored')
+        if all([username, password]) is False:
+            return http.HttpResponseForbidden('缺少必传递参数')
+
+        # try:
+        #     user = User.objects.get(username=username)
+        #     if user.check_password(password) is False:
+        #         return http.HttpResponseForbidden('用户名或密码错误')
+        # except User.DoesNotExist:
+        #     return http.HttpResponseForbidden('用户名或密码错误')
+        #
+        user =  authenticate(request, username=username, password=password)
+        if user is None:
+            return http.HttpResponseForbidden('用户名或密码错误')
+        login(request, user)
+        return http.HttpResponse('跳转到首页')

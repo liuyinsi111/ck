@@ -3,6 +3,7 @@ from django.views.generic import View
 from django import http
 import re
 from .models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django_redis import get_redis_connection
 from django.contrib.auth import login, authenticate, logout
@@ -129,9 +130,16 @@ class LogoutView(View):
         response.delete_cookie('username')
         return response
 
-class InfoView(View):
+# class InfoView(View):
+#     def get(self, request):
+#         if request.user.is_authenticated:
+#             return render(request, 'user_center_info.html')
+#         else:
+#             return redirect('/login/?next=/info/')
+class InfoView(LoginRequiredMixin, View):
     def get(self, request):
-        if request.user.is_authenticated:
-            return render(request, 'user_center_info.html')
-        else:
-            return redirect('/login/?next=/info/')
+        # if request.user.is_authenticated:
+        #     return render(request, 'user_center_info.html')
+        # else:
+        #     return redirect('/login/?next=/info')
+        return render(request, 'user_center_info.html')

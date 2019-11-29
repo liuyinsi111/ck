@@ -209,3 +209,8 @@ LOGGING = {
 AUTH_USER_MODEL = 'users.User'
 AUTHENTICATION_BACKENDS = ['users.utils.UsernameMobileAuthBackend']
 LOGIN_URL = '/login/'
+#
+QQ_CLIENT_ID = '101568493'
+QQ_CLIENT_SECRET = 'e85ad1fa847b5b79d07e40f8f876b211'
+QQ_REDIRECT_URI = 'http://www.meiduo.site:8000/oauth_callback'
+

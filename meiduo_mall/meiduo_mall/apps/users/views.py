@@ -1,15 +1,22 @@
 from django.shortcuts import render, redirect
-from django.views.generic import View
+from django.views import View
 from django import http
 import re
-from .models import User
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-from django_redis import get_redis_connection
 from django.contrib.auth import login, authenticate, logout
+from django_redis import get_redis_connection
 from django.db.models import Q
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
+import json
+from django.db.utils import DataError, DatabaseError
+
+from .models import User
+from meiduo_mall.utils.views import LoginRequiredView
+from meiduo_mall.utils.response_code import RETCODE
+from celery_tasks.email.tasks import send_verify_url
+from .utils import generate_email_verify_url, get_user_token
 import logging
+
 logger = logging.getLogger('django')
 
 class RegisterView(View):
@@ -77,32 +84,6 @@ class LoginView(View):
     def get(self, request):
         return render(request, 'login.html')
 
-    # def post(self, request):#1.接收2.校验3.判断用户名和密码是否正确4.状态保持5.重定向
-    #     query_dict = request.POST
-    #     username = query_dict.get('username')
-    #     password = query_dict.get('password')
-    #     remembered = query_dict.get('remembered')
-    #     if all([username, password]) is False:
-    #         return http.HttpResponseForbidden('缺少必传递参数')
-    #
-    #     # try:
-    #     #     user = User.objects.get(username=username)
-    #     #     if user.check_password(password) is False:
-    #     #         return http.HttpResponseForbidden('用户名或密码错误')
-    #     # except User.DoesNotExist:
-    #     #     return http.HttpResponseForbidden('用户名或密码错误')
-    #     #
-    #     user =  authenticate(request, username=username, password=password)
-    #     if user is None:
-    #         qs = User.objects.filter(Q(username-username) | Q(mobile=username))
-    #         if user.check_password(password) is False:
-    #             return http.HttpResponseForbidden('用户名或密码错误')
-    #         else:
-    #             return http.HttpResponseForbidden('用户名或密码错误')
-    #     login(request, user)
-    #     if remembered is None:
-    #         request.session.set_expiry(0)
-    #     return http.HttpResponse('跳转到首页')
 
     def post(self, request):#1.接收2.校验3.判断用户名和密码是否正确4.状态保持5.重定向
         query_dict = request.POST
@@ -143,3 +124,48 @@ class InfoView(LoginRequiredMixin, View):
         # else:
         #     return redirect('/login/?next=/info')
         return render(request, 'user_center_info.html')
+
+
+class EmailView(LoginRequiredView):
+    """设置邮箱"""
+
+    def put(self, request):
+        # 1. 接收
+        json_str_bytes = request.body
+        json_str = json_str_bytes.decode()
+        json_dict = json.loads(json_str)
+        email = json_dict.get('email')
+        # 2. 校验
+        if not re.match(r'^[a-z0-9][\w\.\-]*@[a-z0-9\-]+(\.[a-z]{2,5}){1,2}$', email):
+            return http.HttpResponseForbidden('邮箱格式有误')
+
+        # 3. 修改user的email字段, save
+        user = request.user
+        if user.email == '':  # 只有当用户真的没有邮箱时再去设置
+            user.email = email
+            user.save()
+
+        verify_url = generate_email_verify_url(user)
+        # 添加到celery任务队列
+        send_verify_url.delay(email, verify_url)
+        # 4. 响应
+        return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK'})
+
+
+class EmailVerifyView(View):
+    """激活邮箱"""
+
+    def get(self, request):
+        # 1.接收查询参数token
+        token = request.GET.get('token')
+        # 2. 对token进行解密
+        user = get_user_token(token)
+        # 判断是否拿到user,如果有
+        if user is None:
+            return http.HttpResponseForbidden('邮箱激活失败')
+        # 将user的email_active改国True 再save
+        user.email_active = True
+        user.save()
+        # 响应
+        # return render(request, 'user_center_info.html')
+        return redirect('/info/')

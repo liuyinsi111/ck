@@ -6,6 +6,7 @@ from .models import User
 
 from django_redis import get_redis_connection
 from django.contrib.auth import login, authenticate
+from django.db.models import Q
 
 
 class RegisterView(View):
@@ -87,7 +88,11 @@ class LoginView(View):
         #
         user =  authenticate(request, username=username, password=password)
         if user is None:
-            return http.HttpResponseForbidden('用户名或密码错误')
+            qs = User.objects.filter(Q(username-username) | Q(mobile=username))
+            if user.check_password(password) is False:
+                return http.HttpResponseForbidden('用户名或密码错误')
+            else:
+                return http.HttpResponseForbidden('用户名或密码错误')
         login(request, user)
         if remembered is None:
             request.session.set_expiry(0)

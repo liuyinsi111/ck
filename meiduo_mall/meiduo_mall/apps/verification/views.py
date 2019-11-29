@@ -9,7 +9,7 @@ from meiduo_mall.libs.yuntongxun.sms import CCP
 from random import randint
 import logging
 from . import constants
-# from celery_tasks.sms.tasks import send_sms_code
+from celery_tasks.sms.tasks import send_sms_code
 
 logger = logging.getLogger('django')
 

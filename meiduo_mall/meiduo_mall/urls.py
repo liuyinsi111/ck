@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^', include('verification.urls', namespace='verification')),
     url(r'^', include('contents.urls', namespace='contents')),
     url(r'^', include('oauth.urls', namespace='oauth')),
+    url(r'^', include('areas.urls', namespace='areas')),  # 省市区模块
 
 ]

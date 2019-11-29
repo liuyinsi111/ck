@@ -169,3 +169,36 @@ class EmailVerifyView(View):
         # 响应
         # return render(request, 'user_center_info.html')
         return redirect('/info/')
+
+class AddressView(LoginRequiredView):
+    """用户收货地址"""
+
+    def get(self, request):
+        user = request.user
+        # 查询当前用户未逻辑删除的所有收货地址
+        address_qs = Address.objects.filter(user=user, is_deleted=False)
+
+        # 模型转字典并包装到列表中
+        address_list = []
+        for address in address_qs:
+            address_list.append({
+                'id': address.id,
+                'title': address.title,
+                'receiver': address.receiver,
+                'province_id': address.province_id,
+                'province': address.province.name,
+                'city_id': address.city_id,
+                'city': address.city.name,
+                'district_id': address.district_id,
+                'district': address.district.name,
+                'place': address.place,
+                'mobile': address.mobile,
+                'tel': address.tel,
+                'email': address.email,
+            })
+
+        context = {
+            'addresses': address_list,  # 用户的所有收货地址
+            'default_address_id': user.default_address_id
+        }
+        return render(request, 'user_center_site.html', context)

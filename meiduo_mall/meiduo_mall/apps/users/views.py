@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import json
 from django.db.utils import DataError, DatabaseError
 
-from .models import User
+from .models import User, Address
 from meiduo_mall.utils.views import LoginRequiredView
 from meiduo_mall.utils.response_code import RETCODE
 from celery_tasks.email.tasks import send_verify_url

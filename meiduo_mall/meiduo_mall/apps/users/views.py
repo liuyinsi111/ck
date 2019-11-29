@@ -3,9 +3,9 @@ from django.views.generic import View
 from django import http
 import re
 from .models import User
-from django.contrib.auth import login
+
 from django_redis import get_redis_connection
-from django.contrib.auth import authenticate
+from django.contrib.auth import login, authenticate
 
 
 class RegisterView(View):
@@ -74,7 +74,7 @@ class LoginView(View):
         query_dict = request.POST
         username = query_dict.get('username')
         password = query_dict.get('password')
-        remembored = query_dict.get('remembored')
+        remembered = query_dict.get('remembered')
         if all([username, password]) is False:
             return http.HttpResponseForbidden('缺少必传递参数')
 
@@ -89,4 +89,6 @@ class LoginView(View):
         if user is None:
             return http.HttpResponseForbidden('用户名或密码错误')
         login(request, user)
+        if remembered is None:
+            request.session.set_expiry(0)
         return http.HttpResponse('跳转到首页')

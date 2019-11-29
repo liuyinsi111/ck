@@ -5,10 +5,11 @@ import re
 from .models import User
 
 from django_redis import get_redis_connection
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.db.models import Q
 from django.conf import settings
-
+import logging
+logger = logging.getLogger('django')
 
 class RegisterView(View):
     def get(self, request):
@@ -120,3 +121,9 @@ class LoginView(View):
         response.set_cookie('username', user.username, max_age=settings.SESSION_COOKIE_AGE if remembered == 'on' else None)
         return response
 
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        response = redirect('/login/')
+        response.delete_cookie('username')
+        return response

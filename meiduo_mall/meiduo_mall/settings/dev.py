@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'users.apps.UsersConfig', # 用户模块应用
+    'oauth.apps.OauthConfig',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

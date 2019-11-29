@@ -71,6 +71,33 @@ class LoginView(View):
     def get(self, request):
         return render(request, 'login.html')
 
+    # def post(self, request):#1.接收2.校验3.判断用户名和密码是否正确4.状态保持5.重定向
+    #     query_dict = request.POST
+    #     username = query_dict.get('username')
+    #     password = query_dict.get('password')
+    #     remembered = query_dict.get('remembered')
+    #     if all([username, password]) is False:
+    #         return http.HttpResponseForbidden('缺少必传递参数')
+    #
+    #     # try:
+    #     #     user = User.objects.get(username=username)
+    #     #     if user.check_password(password) is False:
+    #     #         return http.HttpResponseForbidden('用户名或密码错误')
+    #     # except User.DoesNotExist:
+    #     #     return http.HttpResponseForbidden('用户名或密码错误')
+    #     #
+    #     user =  authenticate(request, username=username, password=password)
+    #     if user is None:
+    #         qs = User.objects.filter(Q(username-username) | Q(mobile=username))
+    #         if user.check_password(password) is False:
+    #             return http.HttpResponseForbidden('用户名或密码错误')
+    #         else:
+    #             return http.HttpResponseForbidden('用户名或密码错误')
+    #     login(request, user)
+    #     if remembered is None:
+    #         request.session.set_expiry(0)
+    #     return http.HttpResponse('跳转到首页')
+
     def post(self, request):#1.接收2.校验3.判断用户名和密码是否正确4.状态保持5.重定向
         query_dict = request.POST
         username = query_dict.get('username')
@@ -78,22 +105,11 @@ class LoginView(View):
         remembered = query_dict.get('remembered')
         if all([username, password]) is False:
             return http.HttpResponseForbidden('缺少必传递参数')
-
-        # try:
-        #     user = User.objects.get(username=username)
-        #     if user.check_password(password) is False:
-        #         return http.HttpResponseForbidden('用户名或密码错误')
-        # except User.DoesNotExist:
-        #     return http.HttpResponseForbidden('用户名或密码错误')
-        #
-        user =  authenticate(request, username=username, password=password)
+        user = authenticate(request, username=username, password=password)
         if user is None:
-            qs = User.objects.filter(Q(username-username) | Q(mobile=username))
-            if user.check_password(password) is False:
-                return http.HttpResponseForbidden('用户名或密码错误')
-            else:
-                return http.HttpResponseForbidden('用户名或密码错误')
+            return http.HttpResponseForbidden('用户名或密码错误')
         login(request, user)
         if remembered is None:
             request.session.set_expiry(0)
         return http.HttpResponse('跳转到首页')
+

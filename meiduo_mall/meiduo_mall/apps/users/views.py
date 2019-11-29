@@ -118,6 +118,7 @@ class LoginView(View):
             request.session.set_expiry(0)
         # return http.HttpResponse('跳转到首页')
         response = redirect('/')
+        response = redirect(request.GET.get('next') or '/')
         response.set_cookie('username', user.username, max_age=settings.SESSION_COOKIE_AGE if remembered == 'on' else None)
         return response
 
@@ -127,3 +128,10 @@ class LogoutView(View):
         response = redirect('/login/')
         response.delete_cookie('username')
         return response
+
+class InfoView(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            return render(request, 'user_center_info.html')
+        else:
+            return redirect('/login/?next=/info/')

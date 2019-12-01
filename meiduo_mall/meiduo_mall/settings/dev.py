@@ -227,4 +227,5 @@ EMAIL_FROM = '美多商城<itcast99@163.com>'  # 发件人抬头
 # 邮箱验证链接
 EMAIL_VERIFY_URL = 'http://www.meiduo.site:8000/emails/verification/'
 
-MEDIA_URL = 'http://image.meiduo.site:8888/'
+# MEDIA_URL = 'http://image.meiduo.site:8888/'
+DEFAULT_FILE_STORAGE = 'meiduo_mall.utils.fastdfs.fdfs_storage.FastDFSStorage'

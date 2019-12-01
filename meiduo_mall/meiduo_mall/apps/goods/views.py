@@ -96,7 +96,7 @@ class HotGoodsView(View):
         # 响应
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK', 'hot_skus': sku_list})
 
-
+#
 class DetailView(View):
     """商品详情界面"""
     def get(self, request, sku_id):
@@ -153,33 +153,33 @@ class DetailView(View):
             'spec_qs': spu_spec_qs,  # 当前商品的所有规格数据
         }
         return render(request, 'detail.html', context)
-
-
-class GoodsVisitView(View):
-    """统计三级类别每日访问类"""
-    def post(self, request, category_id):
-
-
-        # 1. 校验
-        try:
-            category = GoodsCategory.objects.get(id=category_id)
-        except GoodsCategory.DoesNotExist:
-            return http.HttpResponseForbidden('category_id不存在')
-
-        # date = timezone.localdate()  # 获取当前日期
-        # date = timezone.localtime()  # 获取当前时间
-        date = timezone.now()  # 获取日期时间
-        # 2.查询当前三级类型今日是否访问过
-        try:
-            goods_visit = GoodsVisitCount.objects.get(date=date, category_id=category_id)
-        except GoodsVisitCount.DoesNotExist:
-            # 如果没有访问过就新增一条访问记录保存
-            goods_visit = GoodsVisitCount(
-                category=category
-            )
-
-        # 如果今日已经访问过,就修改count
-        goods_visit.count += 1
-        goods_visit.save()
-        # 响应
-        return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK'})
+#
+#
+# class GoodsVisitView(View):
+#     """统计三级类别每日访问类"""
+#     def post(self, request, category_id):
+#
+#
+#         # 1. 校验
+#         try:
+#             category = GoodsCategory.objects.get(id=category_id)
+#         except GoodsCategory.DoesNotExist:
+#             return http.HttpResponseForbidden('category_id不存在')
+#
+#         # date = timezone.localdate()  # 获取当前日期
+#         # date = timezone.localtime()  # 获取当前时间
+#         date = timezone.now()  # 获取日期时间
+#         # 2.查询当前三级类型今日是否访问过
+#         try:
+#             goods_visit = GoodsVisitCount.objects.get(date=date, category_id=category_id)
+#         except GoodsVisitCount.DoesNotExist:
+#             # 如果没有访问过就新增一条访问记录保存
+#             goods_visit = GoodsVisitCount(
+#                 category=category
+#             )
+#
+#         # 如果今日已经访问过,就修改count
+#         goods_visit.count += 1
+#         goods_visit.save()
+#         # 响应
+#         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK'})

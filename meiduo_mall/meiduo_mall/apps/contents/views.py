@@ -39,12 +39,6 @@ class IndexView(View):
                 cat2.sub_cats = cat3_qs
                 # 将保存好三级的每一个一个的二级添加到列表中
                 group_data['sub_cats'].append(cat2)
-
-
-
-
-
-
         context = {
             'categories': categories,  # 所有商品类别数据
         }

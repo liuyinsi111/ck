@@ -16,6 +16,8 @@ from meiduo_mall.utils.response_code import RETCODE
 from celery_tasks.email.tasks import send_verify_url
 from .utils import generate_email_verify_url, get_user_token
 import logging
+from goods.models import SKU
+from carts.utils import merge_cart_cookie_to_redis
 
 logger = logging.getLogger('django')
 
@@ -276,3 +278,67 @@ class AddressCreateView(LoginRequiredView):
             user.save()
         # 4. 响应
         return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK', 'address': address_dict})
+
+
+
+class UserBrowseHistory(View):
+    """保存商品记录"""
+    def post(self, request):
+
+        user = request.user
+        # 如果当前是未登录用户,什么也不做,直接响应
+        if not user.is_authenticated:
+            return http.JsonResponse({'code': RETCODE.SESSIONERR, 'errmsg': '用户未登录'})
+        # 接收
+        json_dict = json.loads(request.body.decode())
+        sku_id = json_dict.get('sku_id')
+
+        # 校验
+        try:
+            sku = SKU.objects.get(id=sku_id)
+        except SKU.DoesNotExist:
+            return http.HttpResponseForbidden('sku_id不存在')
+
+        # 创建redis连接
+        redis_conn = get_redis_connection('history')
+        pl = redis_conn.pipeline()
+
+        # 添加sku_id到列表中
+        key = 'history_%s' % user.id
+        # 先去重
+        pl.lrem(key, 0, sku_id)
+        # 再添加到列表开头
+        pl.lpush(key, sku_id)
+        # 截取列表中前元素
+        pl.ltrim(key, 0, 4)
+        pl.execute()  # 执行管道
+        # 响应
+        return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK'})
+
+    def get(self, request):
+        # 获取当前请求user
+        user = request.user
+        # 如果当前是未登录用户,什么也不做,直接响应
+        if not user.is_authenticated:
+            return http.JsonResponse({'code': RETCODE.SESSIONERR, 'errmsg': '用户未登录'})
+        # 连接redis
+        redis_conn = get_redis_connection('history')
+        # 获取当前登录用户商品浏览记录数据sku_id
+        sku_ids = redis_conn.lrange('history_%s' % user.id, 0, -1)
+        # 定义列表用来保存所有sku字典
+        sku_list = []
+        # 通过sku_id查询sku模型
+        # sku_qs = SKU.objects.filter(id__in=sku_ids)
+        for sku_id in sku_ids:
+            sku = SKU.objects.get(id=sku_id)
+            # 模型转字典
+            sku_list.append({
+                'id': sku.id,
+                'name': sku.name,
+                'price': sku.price,
+                'default_image_url': sku.default_image.url,
+                # 'url': '/detail/' + str(sku.id) + '/'
+            })
+
+        # 响应
+        return http.JsonResponse({'code': RETCODE.OK, 'errmsg': 'OK', 'skus': sku_list})

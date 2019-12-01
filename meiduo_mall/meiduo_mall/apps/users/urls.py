@@ -13,6 +13,6 @@ urlpatterns = [
     url(r'^emails/verification/$', views.EmailVerifyView.as_view()),
     url(r'^addresses/$', views.AddressView.as_view()),
     url(r'^addresses/create/$', views.AddressCreateView.as_view()),
-
+    url(r'^browse_histories/$', views.UserBrowseHistory.as_view()),
 
 ]

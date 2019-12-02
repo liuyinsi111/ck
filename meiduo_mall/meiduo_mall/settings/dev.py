@@ -47,7 +47,9 @@ INSTALLED_APPS = [
     'carts.apps.CartsConfig',
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
+
     'django_crontab',
+    'password.apps.PasswordConfig',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

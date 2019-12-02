@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^', include('oauth.urls', namespace='oauth')),
     url(r'^', include('areas.urls', namespace='areas')),  # 省市区模块
     url(r'^', include('goods.urls', namespace='goods')),  # 省市区模块
-    url(r'^', include('carts.urls', namespace='carts')),  # 购物车模块
+    url(r'^', include('carts.urls', namespace='carts')),
+    url(r'^', include('orders.urls', namespace='orders')),
+    url(r'^', include('payment.urls', namespace='payment')),
 
 ]

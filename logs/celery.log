@@ -1,0 +1,53 @@
+/home/weiwei/.virtualenv/myenv/lib/python3.5/site-packages/djcelery/loaders.py:189: UserWarning: Autodiscover: Error importing users.apps.UsersConfig.tasks: ImportError("No module named 'users.apps.UsersConfig'; 'users.apps' is not a package",)
+  app, related_name, exc,
+/home/weiwei/.virtualenv/myenv/lib/python3.5/site-packages/djcelery/loaders.py:189: UserWarning: Autodiscover: Error importing verifycations.apps.VerifycationsConfig.tasks: ImportError("No module named 'verifycations.apps.VerifycationsConfig'; 'verifycations.apps' is not a package",)
+  app, related_name, exc,
+/home/weiwei/.virtualenv/myenv/lib/python3.5/site-packages/djcelery/loaders.py:189: UserWarning: Autodiscover: Error importing contents.apps.ContentsConfig.tasks: ImportError("No module named 'contents.apps.ContentsConfig'; 'contents.apps' is not a package",)
+  app, related_name, exc,
+/home/weiwei/.virtualenv/myenv/lib/python3.5/site-packages/djcelery/loaders.py:189: UserWarning: Autodiscover: Error importing oauth.apps.OauthConfig.tasks: ImportError("No module named 'oauth.apps.OauthConfig'; 'oauth.apps' is not a package",)
+  app, related_name, exc,
+/home/weiwei/.virtualenv/myenv/lib/python3.5/site-packages/djcelery/loaders.py:189: UserWarning: Autodiscover: Error importing areas.apps.AreasConfig.tasks: ImportError("No module named 'areas.apps.AreasConfig'; 'areas.apps' is not a package",)
+  app, related_name, exc,
+/home/weiwei/.virtualenv/myenv/lib/python3.5/site-packages/djcelery/loaders.py:189: UserWarning: Autodiscover: Error importing goods.apps.GoodsConfig.tasks: ImportError("No module named 'goods.apps.GoodsConfig'; 'goods.apps' is not a package",)
+  app, related_name, exc,
+/home/weiwei/.virtualenv/myenv/lib/python3.5/site-packages/djcelery/loaders.py:189: UserWarning: Autodiscover: Error importing carts.apps.CartsConfig.tasks: ImportError("No module named 'carts.apps.CartsConfig'; 'carts.apps' is not a package",)
+  app, related_name, exc,
+/home/weiwei/.virtualenv/myenv/lib/python3.5/site-packages/djcelery/loaders.py:189: UserWarning: Autodiscover: Error importing orders.apps.OrdersConfig.tasks: ImportError("No module named 'orders.apps.OrdersConfig'; 'orders.apps' is not a package",)
+  app, related_name, exc,
+/home/weiwei/.virtualenv/myenv/lib/python3.5/site-packages/djcelery/loaders.py:189: UserWarning: Autodiscover: Error importing payments.apps.PaymentsConfig.tasks: ImportError("No module named 'payments.apps.PaymentsConfig'; 'payments.apps' is not a package",)
+  app, related_name, exc,
+/home/weiwei/.virtualenv/myenv/lib/python3.5/site-packages/djcelery/loaders.py:189: UserWarning: Autodiscover: Error importing MeiduoExpress.apps.MeiduoexpressConfig.tasks: ImportError("No module named 'MeiduoExpress.apps.MeiduoexpressConfig'; 'MeiduoExpress.apps' is not a package",)
+  app, related_name, exc,
+/home/weiwei/.virtualenv/myenv/lib/python3.5/site-packages/celery/platforms.py:812: RuntimeWarning: You are running the worker with superuser privileges, which is
+absolutely not recommended!
+
+Please specify a different user using the -u option.
+
+User information: uid=1000 euid=1000 gid=0 egid=0
+
+  uid=uid, euid=euid, gid=gid, egid=egid,
+[2019-07-30 00:26:00,807: WARNING/MainProcess] /home/weiwei/.virtualenv/myenv/lib/python3.5/site-packages/celery/apps/worker.py:161: CDeprecationWarning: 
+Starting from version 3.2 Celery will refuse to accept pickle by default.
+
+The pickle serializer is a security concern as it may give attackers
+the ability to execute any command.  It's important to secure
+your broker from unauthorized access when using pickle, so we think
+that enabling pickle should require a deliberate action and not be
+the default choice.
+
+If you depend on pickle then you should set a setting to disable this
+warning and to be sure that everything will continue working
+when you upgrade to Celery 3.2::
+
+    CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
+
+You must only enable the serializers that you will actually use.
+
+
+  warnings.warn(CDeprecationWarning(W_PICKLE_DEPRECATED))
+[2019-07-30 00:26:00,863: INFO/MainProcess] Connected to redis://127.0.0.1:6379/0
+[2019-07-30 00:26:00,872: INFO/MainProcess] mingle: searching for neighbors
+[2019-07-30 00:26:01,878: INFO/MainProcess] mingle: all alone
+[2019-07-30 00:26:01,888: WARNING/MainProcess] /home/weiwei/.virtualenv/myenv/lib/python3.5/site-packages/djcelery/loaders.py:133: UserWarning: Using settings.DEBUG leads to a memory leak, never use this setting in production environments!
+  warn('Using settings.DEBUG leads to a memory leak, never '
+[2019-07-30 00:26:01,888: WARNING/MainProcess] celery@VM-0-4-ubuntu ready.

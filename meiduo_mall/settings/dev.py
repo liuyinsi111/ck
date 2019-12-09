@@ -341,7 +341,22 @@ CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
 
 
 
+# REST_FRAMEWORK框架配置
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # jwt身份认证后端
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
 
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+# jwt拓展的配置项
+JWT_AUTH = {
+    # 签发的token的有效期： timedelta对象表示一天
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=100),
+}
 
 
 

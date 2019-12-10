@@ -58,3 +58,11 @@ def get_user_token(token):
             return user
         except User.DoesNotExist:
             return None
+
+
+def jwt_response_payload_handler(token, user=None, resquest=None):
+    return {
+        'token': token,
+        'id': user.id,
+        'username': user.username
+    }

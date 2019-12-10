@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^addresses/$', views.AddressView.as_view()),
     url(r'^addresses/create/$', views.AddressCreateView.as_view()),
     url(r'^browse_histories/$', views.UserBrowseHistory.as_view()),
-    # url(r'^authorizations/$', obtain_jwt_token.as_view()),
+
     #
 
 ]

@@ -24,7 +24,9 @@ logger = logging.getLogger('django')
 class RegisterView(View):
     def get(self, request):
         return render(request, 'register.html')
+    #定义注册视图，渲染注册页面
     def post(self, request):
+        #请求方式用post，query_ict也是用post
         query_dict = request.POST
         username = query_dict.get('username')
         password = query_dict.get('password')
@@ -86,26 +88,25 @@ class LoginView(View):
     def get(self, request):
         return render(request, 'login.html')
 
-
-    def post(self, request):#1.接收2.校验3.判断用户名和密码是否正确4.状态保持5.重定向
+    def post(self, request):
         query_dict = request.POST
         username = query_dict.get('username')
-        password = query_dict.get('password')
-        remembered = query_dict.get('remembered')
+        pwd = query_dict.get('pwd')
+        password = pwd
+        remembered = query_dict.get('remembered')  # 'on' or None
         if all([username, password]) is False:
-            return http.HttpResponseForbidden('缺少必传递参数')
+            return http.HttpResponseForbidden('缺少必传参数')
         user = authenticate(request, username=username, password=password)
         if user is None:
             return http.HttpResponseForbidden('用户名或密码错误')
         login(request, user)
-        if remembered is None:
+        if remembered is None:  # 如果用户没有勾选记住登录,设置session过期时间为会话结束
             request.session.set_expiry(0)
-        # return http.HttpResponse('跳转到首页')
-        response = redirect('/')
         response = redirect(request.GET.get('next') or '/')
-        response.set_cookie('username', user.username, max_age=settings.SESSION_COOKIE_AGE if remembered == 'on' else None)
+        response.set_cookie('username', user.username,
+                            max_age=settings.SESSION_COOKIE_AGE if remembered == 'on' else None)
+        merge_cart_cookie_to_redis(request, response)
         return response
-
 class LogoutView(View):
     def get(self, request):
         logout(request)

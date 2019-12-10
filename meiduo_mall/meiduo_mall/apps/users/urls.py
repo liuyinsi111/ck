@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from django.contrib import admin
 from . import views
+from rest_framework_jwt.views import obtain_jwt_token
 
 urlpatterns = [
     url(r'^register/$', views.RegisterView.as_view(), name='register'),
@@ -14,5 +15,7 @@ urlpatterns = [
     url(r'^addresses/$', views.AddressView.as_view()),
     url(r'^addresses/create/$', views.AddressCreateView.as_view()),
     url(r'^browse_histories/$', views.UserBrowseHistory.as_view()),
+    # url(r'^authorizations/$', obtain_jwt_token.as_view()),
+    #
 
 ]

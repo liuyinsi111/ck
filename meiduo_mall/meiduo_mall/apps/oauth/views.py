@@ -17,6 +17,7 @@ from .models import OAuthQQUser
 from users.models import User
 from .utils import generate_open_id_signature, check_open_id
 
+
 class QQAuthURLView(View):
     def get(self, request):
         next = request.GET.get('next') or '/'

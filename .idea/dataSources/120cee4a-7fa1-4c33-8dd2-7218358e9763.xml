@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataSource name="meiduo_mall_db@192.168.203.151">
+<dataSource name="meiduo_mall_db@192.168.203.153">
   <database-model serializer="dbm" rdbms="MYSQL" format-version="4.10">
     <root id="1">
       <ServerVersion>5.7.25</ServerVersion>

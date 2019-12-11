@@ -7,6 +7,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from users.models import User
+from orders.models import OrderInfo
+from goods.models import GoodsVisitCount
 
 from datetime import datetime,timedelta,timezone
 # timezone: django封装的用来处理时间的模块
@@ -14,9 +16,16 @@ from django.utils import timezone as dj_timezone
 from django.conf import settings
 import pytz
 
-class UserTotalView(APIView):
+from rest_framework.viewsets import ViewSet
+from rest_framework.decorators import action
 
-    def get(self, request):
+
+# 原则：一类资源的处理，尽可能定义在一个视图中
+class HomeViewSet(ViewSet):
+
+    # 用户总数统计
+    @action(methods=['get'], detail=False)
+    def total_count(self, request):
         # 1、统计用户模型类对象总数
         count = User.objects.count()
         date = datetime.today() # 年月日
@@ -27,11 +36,10 @@ class UserTotalView(APIView):
             "date": date
         })
 
+    # 日新增用户统计
+    @action(methods=['get'], detail=False)
+    def day_increment(self, request):
 
-# 定义当日用户新增统计
-class UserDayIncrView(APIView):
-
-    def get(self, request):
         # 1、获得"当日"的零时作为过滤的条件
         cur_utctime = datetime.utcnow()  # datetime对象,表示当前时刻(是以utc时区作为表示形式的)
         # utcnow()：函数得到0时区时刻， 但是会丢弃时区属性
@@ -54,12 +62,10 @@ class UserDayIncrView(APIView):
             "date": cur_0_localtime.date() # 只取年月日
         })
 
+    # 日活跃用户统计
+    @action(methods=['get'], detail=False)
+    def day_active(self, request):
 
-
-# 日活跃用户数量统计
-class UserActiveView(APIView):
-
-    def get(self, request):
         # 1、获得"当日"(当前django服务器所在时区)的零时
         # 获得'Asia/Shanghai'的当日零时
         # 当前时刻: 2019-12-11 03:56:31.219005+00:00
@@ -84,13 +90,11 @@ class UserActiveView(APIView):
             "date": cur_0_shanghai.date()
         })
 
+    # 当日下单用户统计
+    # 日下单用户统计：大于等于今天零时的所有订单(从表)，查询所有订单关联的用户(主表)
+    @action(methods=['get'], detail=False)
+    def day_orders(self, request):
 
-
-from orders.models import OrderInfo
-# 日下单用户统计：大于等于今天零时的所有订单(从表)，查询所有订单关联的用户(主表)
-class UserOrderCount(APIView):
-
-    def get(self, request):
         # 联合查询User、OrderInfo
         # 分析：
         # 1）目标数据;  答：User表(主表数据)
@@ -135,10 +139,11 @@ class UserOrderCount(APIView):
             "date": cur_0_shanghai.date()
         })
 
-# 统计最近包括当日新增用户量
-class UserMonthIncrView(APIView):
+    # 最近30日增用户统计
+    # 统计最近包括当日新增用户量
+    @action(methods=['get'], detail=False)
+    def month_increment(self, request):
 
-    def get(self, request):
         # 本地时间零时
         # 当日零时
         cur_time = dj_timezone.now()
@@ -190,15 +195,30 @@ class UserMonthIncrView(APIView):
 
 
 
+from rest_framework.generics import ListAPIView
+from meiduo_admin.serializers.home_serializers import GoodsVisitCountModelSerializer
+# 序列化返回GoodsVisitCount模型类对象多条数据
+class GoodsVisitCountView(ListAPIView):
+    queryset = GoodsVisitCount.objects.all()
+    serializer_class = GoodsVisitCountModelSerializer
 
+    def get_queryset(self):
+        # 针对每一次请求。都会调用该方法
+        # 我们需要在该方法中，获得零时，并过滤
+        # 当日零时
+        cur_time = dj_timezone.now()
+        # 1.1 把cur_time这个utc时区时间转化成'Asia/Shanghai'时区的时刻
+        cur_shanghai_time = cur_time.astimezone(tz=pytz.timezone(settings.TIME_ZONE))
+        # 1.2 获得本地的零时
+        cur_0_shanghai = cur_shanghai_time.replace(hour=0,
+                                                   minute=0,
+                                                   second=0,
+                                                   microsecond=0)
 
+        # 数据集要求是今天的访问数据
+        queryset = GoodsVisitCount.objects.filter(create_time__gte=cur_0_shanghai)
 
-
-
-
-
-
-
+        return queryset
 
 
 

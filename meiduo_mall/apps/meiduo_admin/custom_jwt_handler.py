@@ -1,6 +1,5 @@
 
 # 自定义jwt拓展构建响应数据函数
-
 def custom_jwt_response_payload_handler(token, user=None, request=None):
     """
     Returns the response data for both the login and refresh views.

@@ -25,9 +25,14 @@ class MeiduoModelBackend(ModelBackend):
             except:
                 return None
 
-        # 后台管理站点登陆的时候，不会传入request
-        if not request and not user.is_staff:
-            return None
+
+        # 区分当前登陆请求是商城主页登陆还是MIS后台登陆
+        if not request:
+            # 如果请求对象是None：后台MIS站点登陆
+            # 必须验证is_staff == True
+            if not user.is_staff:
+                return None # 返回一个空对象，表示身份认证失败
+
 
 
         # 判断密码

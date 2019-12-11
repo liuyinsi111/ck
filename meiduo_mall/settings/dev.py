@@ -360,15 +360,4 @@ JWT_AUTH = {
 }
 
 
-
-
-
-
-# from  rest_framework_jwt.utils import jwt_response_payload_handler
-
-
-
-
-
-
-
+# from rest_framework_jwt.authentication import JSONWebTokenAuthentication

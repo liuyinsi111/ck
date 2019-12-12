@@ -19,9 +19,12 @@ import pytz
 from rest_framework.viewsets import ViewSet
 from rest_framework.decorators import action
 
+from rest_framework.permissions import IsAdminUser
 
 # 原则：一类资源的处理，尽可能定义在一个视图中
 class HomeViewSet(ViewSet):
+    # permission_classes = [IsAdminUser]
+
 
     # 用户总数统计
     @action(methods=['get'], detail=False)
@@ -199,6 +202,8 @@ from rest_framework.generics import ListAPIView
 from meiduo_admin.serializers.home_serializers import GoodsVisitCountModelSerializer
 # 序列化返回GoodsVisitCount模型类对象多条数据
 class GoodsVisitCountView(ListAPIView):
+    # permission_classes = [IsAdminUser]
+
     queryset = GoodsVisitCount.objects.all()
     serializer_class = GoodsVisitCountModelSerializer
 

@@ -6,6 +6,7 @@ from meiduo_admin.views.login_view import LoginView
 # 该接口视图，只响应token值。不符合我们自己的业务需求，所以我们要修改该视图的返回数据
 from rest_framework_jwt.views import obtain_jwt_token
 from meiduo_admin.views.home_views import *
+from meiduo_admin.views.user_views import *
 from rest_framework.routers import SimpleRouter
 
 urlpatterns = [
@@ -25,6 +26,9 @@ urlpatterns = [
     # url(r'^statistical/month_increment/$', HomeViewSet.as_view({"get": "month_increment"})),
     # 日分类商品访问量
     url(r'^statistical/goods_day_views/$', GoodsVisitCountView.as_view()),
+
+    # 用户多条数据返回
+    url(r'^users/$', UserListView.as_view()),
 ]
 
 

@@ -75,6 +75,8 @@ urlpatterns = [
     # 新增选项可选规格信息
     url(r'^goods/specs/simple/$', OptionSpecsListView.as_view()),
     url(r'^skus/images/$', ImageViewSet.as_view({'get': 'list', 'post': 'create'})),
+    url(r'^skus/images/(?P<pk>\d+)/$', ImageViewSet.as_view({'get': 'retrieve',
+                                                             'put': 'update'})),
     url(r'^skus/simple/$', ImageViewSet.as_view({'get': 'simple'})),
 ]
 

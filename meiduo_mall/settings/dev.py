@@ -362,4 +362,4 @@ JWT_AUTH = {
 }
 
 
-from rest_framework.settings import DEFAULTS
+FDFS_CONFIG_PATH = os.path.join(BASE_DIR, 'utils/fdfs/client.conf')

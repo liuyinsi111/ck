@@ -1,14 +1,16 @@
 
 
 from rest_framework.response import Response
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView,CreateAPIView
 from users.models import User
 from meiduo_admin.serializers.user_serializers import UserModelSerializer
 from meiduo_admin.custom_paginations import MyPage
 
 
-class UserListView(ListAPIView):
+class UserListCreateView(ListAPIView, CreateAPIView):
     queryset = User.objects.all()
+    #获得所有用户
+
     serializer_class = UserModelSerializer
 
     pagination_class =  MyPage
@@ -19,6 +21,7 @@ class UserListView(ListAPIView):
         # 过滤逻辑：用户名中包含keyword字串
         # 1、获得keyword
         # 思考：如何在一个非视图函数中，获得当前请求对象request
+        #query_params是request的一个类方法，可以用来获得get请求中的字符串
         # self.request: 当前视图对象，所处理的请求对象
         keyword = self.request.query_params.get("keyword")
         # 2、keyword有的话，过滤

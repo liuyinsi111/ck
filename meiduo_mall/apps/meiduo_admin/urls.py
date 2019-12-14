@@ -7,6 +7,7 @@ from meiduo_admin.views.login_view import LoginView
 from rest_framework_jwt.views import obtain_jwt_token
 from meiduo_admin.views.home_views import *
 from meiduo_admin.views.user_views import *
+from meiduo_admin.views.sku_views import *
 from rest_framework.routers import SimpleRouter
 
 urlpatterns = [
@@ -28,7 +29,19 @@ urlpatterns = [
     url(r'^statistical/goods_day_views/$', GoodsVisitCountView.as_view()),
 
     # 用户多条数据返回
-    url(r'^users/$', UserListView.as_view()),
+    url(r'^users/$', UserListCreateView.as_view()),
+
+    # SKU表管理
+    url(r'^skus/$', SKUViewSet.as_view({'get':'list', 'post':'create'})),
+    url(r'^skus/(?P<pk>\d+)/$', SKUViewSet.as_view({'delete':'destroy',
+                                                    'get': 'retrieve',
+                                                    'put': 'update'})),
+    # 新增sku可选三级分类
+    url(r'^skus/categories/$', SKUCategoryListView.as_view()),
+    # 新增sku可选spu信息
+    url(r'^goods/simple/$', SPUSimpleListView.as_view()),
+    # 新增sku可选规格选项信息
+    url(r'^goods/(?P<pk>\d+)/specs/$', SKUSpecOptListView.as_view()),
 ]
 
 

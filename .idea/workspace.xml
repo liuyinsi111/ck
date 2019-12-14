@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6b4a6d74-cad6-4d67-bb26-b8b61f667385" name="Default" comment="图片管理：定义路由simple，写出图片的视图函数和2个序列化函数，就可发送前端图片管理页面接口1序列化之后的id,sku,image,和新增商品图片界面接口2序列化后的id,name,然后控制台会报错500,原因是缺少一个保存数据的时候防止重复的方法。">
+    <list default="true" id="6b4a6d74-cad6-4d67-bb26-b8b61f667385" name="Default" comment="图片管理：定义路由simple，写出图片的视图函数和2个序列化函数，就可发送前端图片管理页面接口1序列化之后的id,sku,image,和新增商品图片界面接口2序列化后的id,name,然后控制台会报错500,原因是缺少一个保存数据的时候防止重复的方法。由于fastdfs本身不会重复存储相同的数据，所以需要自定义一个exists方法告诉django存储后端,无需判断文集是否已经存在。">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/meiduo.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/meiduo.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/meiduo_mall/apps/meiduo_admin/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/meiduo_mall/apps/meiduo_admin/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/meiduo_mall/settings/dev.py" beforeDir="false" afterPath="$PROJECT_DIR$/meiduo_mall/settings/dev.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meiduo_mall/utils/fdfs/storage.py" beforeDir="false" afterPath="$PROJECT_DIR$/meiduo_mall/utils/fdfs/storage.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -320,7 +318,7 @@
       <workItem from="1576123470377" duration="2873000" />
       <workItem from="1576141229199" duration="4791000" />
       <workItem from="1576146437639" duration="2111000" />
-      <workItem from="1576295299344" duration="6373000" />
+      <workItem from="1576295299344" duration="6766000" />
     </task>
     <task id="LOCAL-00001" summary="商品管理">
       <created>1576295705687</created>
@@ -329,7 +327,21 @@
       <option name="project" value="LOCAL" />
       <updated>1576295705687</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="图片管理：定义路由simple，写出图片的视图函数和2个序列化函数，就可发送前端图片管理页面接口1序列化之后的id,sku,image,和新增商品图片界面接口2序列化后的id,name,然后控制台会报错500,原因是缺少一个保存数据的时候防止重复的方法。">
+      <created>1576317730937</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1576317730937</updated>
+    </task>
+    <task id="LOCAL-00003" summary="图片管理：定义路由simple，写出图片的视图函数和2个序列化函数，就可发送前端图片管理页面接口1序列化之后的id,sku,image,和新增商品图片界面接口2序列化后的id,name,然后控制台会报错500,原因是缺少一个保存数据的时候防止重复的方法。由于fastdfs本身不会重复存储相同的数据，所以需要自定义一个exists方法告诉django存储后端,无需判断文集是否已经存在。">
+      <created>1576317901918</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1576317901918</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
@@ -347,7 +359,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="商品管理" />
     <MESSAGE value="图片管理：定义路由simple，写出图片的视图函数和2个序列化函数，就可发送前端图片管理页面接口1序列化之后的id,sku,image,和新增商品图片界面接口2序列化后的id,name,然后控制台会报错500,原因是缺少一个保存数据的时候防止重复的方法。" />
-    <option name="LAST_COMMIT_MESSAGE" value="图片管理：定义路由simple，写出图片的视图函数和2个序列化函数，就可发送前端图片管理页面接口1序列化之后的id,sku,image,和新增商品图片界面接口2序列化后的id,name,然后控制台会报错500,原因是缺少一个保存数据的时候防止重复的方法。" />
+    <MESSAGE value="图片管理：定义路由simple，写出图片的视图函数和2个序列化函数，就可发送前端图片管理页面接口1序列化之后的id,sku,image,和新增商品图片界面接口2序列化后的id,name,然后控制台会报错500,原因是缺少一个保存数据的时候防止重复的方法。由于fastdfs本身不会重复存储相同的数据，所以需要自定义一个exists方法告诉django存储后端,无需判断文集是否已经存在。" />
+    <option name="LAST_COMMIT_MESSAGE" value="图片管理：定义路由simple，写出图片的视图函数和2个序列化函数，就可发送前端图片管理页面接口1序列化之后的id,sku,image,和新增商品图片界面接口2序列化后的id,name,然后控制台会报错500,原因是缺少一个保存数据的时候防止重复的方法。由于fastdfs本身不会重复存储相同的数据，所以需要自定义一个exists方法告诉django存储后端,无需判断文集是否已经存在。" />
   </component>
   <component name="WindowStateProjectService">
     <state x="292" y="172" width="800" height="677" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576124115743">
@@ -359,10 +372,10 @@
       <screen x="67" y="27" width="1085" height="837" />
     </state>
     <state x="342" y="191" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/67.27.1085.837@67.27.1085.837" timestamp="1576316089435" />
-    <state x="127" y="29" width="924" height="835" key="CommitChangelistDialog2" timestamp="1576317730052">
+    <state x="127" y="29" width="924" height="835" key="CommitChangelistDialog2" timestamp="1576318226812">
       <screen x="67" y="27" width="1085" height="837" />
     </state>
-    <state x="127" y="29" width="924" height="835" key="CommitChangelistDialog2/67.27.1085.837@67.27.1085.837" timestamp="1576317730052" />
+    <state x="127" y="29" width="924" height="835" key="CommitChangelistDialog2/67.27.1085.837@67.27.1085.837" timestamp="1576318226812" />
     <state x="419" y="194" width="424" height="484" key="FileChooserDialogImpl" timestamp="1576154078886">
       <screen x="67" y="27" width="1085" height="837" />
     </state>

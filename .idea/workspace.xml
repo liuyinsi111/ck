@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6b4a6d74-cad6-4d67-bb26-b8b61f667385" name="Default" comment="拉取镜像del/，tracker到宿主，启动storage，注意127.0.0.1：22122中不能使用127.0.0.1，改成192.168，老师代码中的文件路径和ip要改成自己的，可用ls配合cd，pwd获得路径，ifconfig获得ip，">
+    <list default="true" id="6b4a6d74-cad6-4d67-bb26-b8b61f667385" name="Default" comment="笔记">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/meiduo.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/meiduo.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -324,7 +325,8 @@
       <workItem from="1576141229199" duration="4791000" />
       <workItem from="1576146437639" duration="2111000" />
       <workItem from="1576295299344" duration="12066000" />
-      <workItem from="1576328021807" duration="1129000" />
+      <workItem from="1576328021807" duration="1437000" />
+      <workItem from="1576370010599" duration="1417000" />
     </task>
     <task id="LOCAL-00001" summary="商品管理">
       <created>1576295705687</created>
@@ -361,7 +363,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576327508097</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="笔记">
+      <created>1576329182015</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1576329182015</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView">
@@ -384,7 +393,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -396,7 +407,8 @@
     <MESSAGE value="图片管理：定义路由simple，写出图片的视图函数和2个序列化函数，就可发送前端图片管理页面接口1序列化之后的id,sku,image,和新增商品图片界面接口2序列化后的id,name,然后控制台会报错500,原因是缺少一个保存数据的时候防止重复的方法。由于fastdfs本身不会重复存储相同的数据，所以需要自定义一个exists方法告诉django存储后端,无需判断文集是否已经存在。" />
     <MESSAGE value="自定义fdfs文件上传函数custom_upload_handler,在storage.py中增加exists方法告诉django存储后端不需要检验是否重复存储，并且在storage.py中的save方法中自定义存储逻辑，返回存储字节id" />
     <MESSAGE value="拉取镜像del/，tracker到宿主，启动storage，注意127.0.0.1：22122中不能使用127.0.0.1，改成192.168，老师代码中的文件路径和ip要改成自己的，可用ls配合cd，pwd获得路径，ifconfig获得ip，" />
-    <option name="LAST_COMMIT_MESSAGE" value="拉取镜像del/，tracker到宿主，启动storage，注意127.0.0.1：22122中不能使用127.0.0.1，改成192.168，老师代码中的文件路径和ip要改成自己的，可用ls配合cd，pwd获得路径，ifconfig获得ip，" />
+    <MESSAGE value="笔记" />
+    <option name="LAST_COMMIT_MESSAGE" value="笔记" />
   </component>
   <component name="WindowStateProjectService">
     <state x="192" y="106" width="800" height="677" key="#Notifications" timestamp="1576327780679">
@@ -416,33 +428,33 @@
       <screen x="67" y="27" width="1085" height="837" />
     </state>
     <state x="342" y="191" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/67.27.1085.837@67.27.1085.837" timestamp="1576316089435" />
-    <state x="127" y="29" width="924" height="835" key="CommitChangelistDialog2" timestamp="1576327507404">
+    <state x="127" y="29" width="924" height="835" key="CommitChangelistDialog2" timestamp="1576329181435">
       <screen x="67" y="27" width="1085" height="837" />
     </state>
-    <state x="127" y="29" width="924" height="835" key="CommitChangelistDialog2/67.27.1085.837@67.27.1085.837" timestamp="1576327507404" />
-    <state x="419" y="194" width="424" height="484" key="FileChooserDialogImpl" timestamp="1576154078886">
+    <state x="127" y="29" width="924" height="835" key="CommitChangelistDialog2/67.27.1085.837@67.27.1085.837" timestamp="1576329181435" />
+    <state x="419" y="194" width="424" height="484" key="FileChooserDialogImpl" timestamp="1576381981329">
       <screen x="67" y="27" width="1085" height="837" />
     </state>
-    <state x="419" y="194" width="424" height="484" key="FileChooserDialogImpl/67.27.1085.837@67.27.1085.837" timestamp="1576154078886" />
-    <state width="918" height="110" key="GridCell.Tab.0.bottom" timestamp="1576327884153">
+    <state x="419" y="194" width="424" height="484" key="FileChooserDialogImpl/67.27.1085.837@67.27.1085.837" timestamp="1576381981329" />
+    <state width="918" height="110" key="GridCell.Tab.0.bottom" timestamp="1576381984907">
       <screen x="67" y="27" width="1085" height="837" />
     </state>
-    <state width="918" height="110" key="GridCell.Tab.0.bottom/67.27.1085.837@67.27.1085.837" timestamp="1576327884153" />
+    <state width="918" height="110" key="GridCell.Tab.0.bottom/67.27.1085.837@67.27.1085.837" timestamp="1576381984907" />
     <state width="1801" height="153" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1576326495900" />
-    <state width="918" height="110" key="GridCell.Tab.0.center" timestamp="1576327884153">
+    <state width="918" height="110" key="GridCell.Tab.0.center" timestamp="1576381984907">
       <screen x="67" y="27" width="1085" height="837" />
     </state>
-    <state width="918" height="110" key="GridCell.Tab.0.center/67.27.1085.837@67.27.1085.837" timestamp="1576327884153" />
+    <state width="918" height="110" key="GridCell.Tab.0.center/67.27.1085.837@67.27.1085.837" timestamp="1576381984907" />
     <state width="1801" height="153" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1576326495899" />
-    <state width="918" height="110" key="GridCell.Tab.0.left" timestamp="1576327884152">
+    <state width="918" height="110" key="GridCell.Tab.0.left" timestamp="1576381984906">
       <screen x="67" y="27" width="1085" height="837" />
     </state>
-    <state width="918" height="110" key="GridCell.Tab.0.left/67.27.1085.837@67.27.1085.837" timestamp="1576327884152" />
+    <state width="918" height="110" key="GridCell.Tab.0.left/67.27.1085.837@67.27.1085.837" timestamp="1576381984906" />
     <state width="1801" height="153" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1576326495899" />
-    <state width="918" height="110" key="GridCell.Tab.0.right" timestamp="1576327884153">
+    <state width="918" height="110" key="GridCell.Tab.0.right" timestamp="1576381984907">
       <screen x="67" y="27" width="1085" height="837" />
     </state>
-    <state width="918" height="110" key="GridCell.Tab.0.right/67.27.1085.837@67.27.1085.837" timestamp="1576327884153" />
+    <state width="918" height="110" key="GridCell.Tab.0.right/67.27.1085.837@67.27.1085.837" timestamp="1576381984907" />
     <state width="1801" height="153" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1576326495900" />
     <state width="1033" height="158" key="GridCell.Tab.1.bottom" timestamp="1576315386475">
       <screen x="67" y="27" width="1085" height="837" />
@@ -468,10 +480,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="467" y="187" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1576123505506" />
-    <state x="327" y="165" width="800" height="531" key="Vcs.Push.Dialog.v2" timestamp="1576328531135">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="219" y="137" width="800" height="531" key="Vcs.Push.Dialog.v2" timestamp="1576329188318">
+      <screen x="67" y="27" width="1085" height="837" />
     </state>
-    <state x="219" y="137" width="800" height="531" key="Vcs.Push.Dialog.v2/67.27.1085.837@67.27.1085.837" timestamp="1576328039984" />
+    <state x="219" y="137" width="800" height="531" key="Vcs.Push.Dialog.v2/67.27.1085.837@67.27.1085.837" timestamp="1576329188318" />
     <state x="327" y="165" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1576328531135" />
   </component>
   <component name="XDebuggerManager">
@@ -528,6 +540,6 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/meiduo_mall$manage.coverage" NAME="manage Coverage Results" MODIFIED="1576327081696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/meiduo_mall$manage.coverage" NAME="manage Coverage Results" MODIFIED="1576370186201" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
